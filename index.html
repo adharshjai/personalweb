@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Adharsh | Eyenova</title>
+    <!-- Importing a fallback serif font in case Kepler isn't installed locally -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;1,6..72,400;1,6..72,500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="./style.css" />
+  </head>
+  <body>
+    <!-- Background Canvas for Three.js (will be placed in front of text via CSS z-index) -->
+    <canvas id="webgl-canvas"></canvas>
+
+    <!-- Scrollable Content -->
+    <main class="content">
+      <section class="hero">
+        <!-- Scroll Down Indicator -->
+        <div class="scroll-indicator" id="scroll-arrow">
+          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="6 9 12 15 18 9"></polyline>
+          </svg>
+        </div>
+      </section>
+      
+      <!-- Single continuous scroll track for all 3D animations -->
+      <section id="animation-trigger" class="animation-track"></section>
+    </main>
+
+    <!-- The Main Website Content (outside .content so it can stack above the 3D canvas) -->
+    <section class="main-content" id="main-content">
+        <h2>Welcome to the Future of Vision</h2>
+        <p>The EyeNova is a revolutionary wearable designed to enhance human perception...</p>
+        <div class="features">
+          <div class="feature-card">
+            <h3>Advanced AI</h3>
+            <p>Real-time processing powered by the latest machine learning models.</p>
+          </div>
+          <div class="feature-card">
+            <h3>Ultra Low-Latency</h3>
+            <p>See the world as it happens, with zero perceptible delay.</p>
+          </div>
+          <div class="feature-card">
+            <h3>All-Day Battery</h3>
+            <p>Designed to keep up with your longest days.</p>
+          </div>
+        </div>
+      </section>
+
+
+    <script type="module" src="./main.js"></script>
+  </body>
+</html>
