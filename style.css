@@ -190,9 +190,9 @@ body {
   display: flex;
   align-items: center;
   gap: 0.75rem;
-  font-family: 'Inter', sans-serif;
+  font-family: 'Newsreader', serif;
   font-size: 1.1rem;
-  font-weight: 600;
+  font-weight: 400;
   z-index: 1; /* Hidden behind the portrait */
   transition: all 0.5s cubic-bezier(0.25, 1, 0.5, 1);
   pointer-events: none; /* Ignore clicks when hidden */
@@ -282,9 +282,9 @@ body {
   
   color: #FAFAFA;
   padding: 1.2rem 3rem;
-  font-family: 'Input Sans', sans-serif;
+  font-family: 'Newsreader', serif;
   font-size: 1.1rem;
-  font-weight: 500;
+  font-weight: 400;
   border-radius: 100px; /* Perfect pill shape */
   cursor: pointer;
   transition: all 0.4s cubic-bezier(0.25, 1, 0.5, 1);
@@ -357,9 +357,9 @@ body {
 }
 
 .view-resume-btn {
-  font-family: 'Inter', sans-serif;
+  font-family: 'Newsreader', serif;
   font-size: 1rem;
-  font-weight: 500;
+  font-weight: 400;
   color: var(--primary-color);
   text-decoration: none;
   padding: 0.75rem 1.5rem;
@@ -515,8 +515,8 @@ body {
   gap: 0.5rem;
   color: #FAFAFA;
   text-decoration: none;
-  font-family: 'Inter', sans-serif;
-  font-weight: 500;
+  font-family: 'Newsreader', serif;
+  font-weight: 400;
   font-size: 1.1rem;
   transition: opacity 0.2s ease;
 }
