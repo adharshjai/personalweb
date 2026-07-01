@@ -288,7 +288,7 @@ body {
   border-radius: 100px; /* Perfect pill shape */
   cursor: pointer;
   transition: all 0.4s cubic-bezier(0.25, 1, 0.5, 1);
-  letter-spacing: 0.1em;
+  letter-spacing: 0.02em;
   
   /* Layout for text and arrow */
   display: flex;
