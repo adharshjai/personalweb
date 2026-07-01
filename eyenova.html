@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>EyeNova | Adharsh Jaikumar</title>
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=Newsreader:ital,opsz,wght@0,6..72,200..800;1,6..72,200..800&family=EB+Garamond:ital,wght@0,400;0,500;1,400;1,500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/style.css" />
+  </head>
+  <body style="background-color: var(--bg-color); color: #FAFAFA; overflow-x: hidden;">
+    
+    <div class="project-header">
+      <a href="/" class="back-btn">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+        <span>Back</span>
+      </a>
+      <a href="/eyenova_paper.pdf" target="_blank" class="view-resume-btn view-paper-btn">View Full Paper ↗</a>
+    </div>
+
+    <section class="collage-container">
+      <div class="collage-header">
+        <h1 class="project-title">EyeNova</h1>
+        <p class="project-subtitle">Development of a Novel Slit-Lamp Replication and ResNet Platform for Early Non-Invasive Detection of Glaucoma and Kayser-Fleischer Rings.</p>
+      </div>
+
+      <div class="collage-grid">
+        <!-- Abstract / Intro -->
+        <div class="collage-item text-item abstract-box">
+          <h3>The Challenge</h3>
+          <p>Wilson’s disease is an autosomal recessive disorder caused by mutations in the ATP7B gene, leading to toxic copper accumulation in the liver, brain, and eyes. A key diagnostic feature is the presence of Kayser-Fleischer (KF) rings, which are often difficult to detect in individuals with darker irises due to subtle spectral differences. Traditional slit-lamp examinations require expensive equipment and trained specialists, limiting accessibility in low-resource settings.</p>
+        </div>
+
+        <!-- KF Ring Image -->
+        <div class="collage-item image-item">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/0/00/Kayser-Fleischer_ring.jpg" alt="Kayser-Fleischer Ring" />
+          <div class="image-caption">Kayser-Fleischer Ring</div>
+        </div>
+
+        <!-- Mantis Shrimp Image -->
+        <div class="collage-item image-item tall-image">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/4/4e/Odontodactylus_scyllarus.jpg" alt="Mantis Shrimp" style="object-position: center;"/>
+          <div class="image-caption">Mantis Shrimp Biomimicry</div>
+        </div>
+
+        <!-- Biomimicry Explanation -->
+        <div class="collage-item text-item highlight-box">
+          <h3>Biomimetic Inspiration</h3>
+          <p>The visual system of the mantis shrimp served as the conceptual framework, as it can detect up to 16 distinct photoreceptor channels spanning ultraviolet to infrared wavelengths. Guided by this principle, the standard ResNet-50 architecture was modified to enhance feature extraction across extended spectral representations.</p>
+        </div>
+
+        <!-- Slit Lamp Device -->
+        <div class="collage-item image-item wide-image">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/5/52/Slit_lamp.jpg" alt="Slit Lamp" style="object-position: top;"/>
+          <div class="image-caption">Traditional Slit-Lamp System</div>
+        </div>
+
+        <!-- Glaucoma Image -->
+        <div class="collage-item image-item">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/9/91/Glaucoma.png" alt="Glaucoma Representation" />
+          <div class="image-caption">Glaucoma Diagnostics</div>
+        </div>
+
+        <!-- Results Text -->
+        <div class="collage-item text-item results-box">
+          <h3>Results</h3>
+          <p>EyeNova was developed as a portable, low-cost diagnostic platform combining a Raspberry Pi, IR-capable camera, and 3D-printed slit-lamp-inspired optics. The glaucoma model achieved <strong>89.4% accuracy</strong>, while the KF detection model achieved <strong>93.5% accuracy</strong>, significantly outperforming average human diagnostic rates (~65%).</p>
+        </div>
+      </div>
+    </section>
+
+  </body>
+</html>
