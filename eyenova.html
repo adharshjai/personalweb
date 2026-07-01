@@ -24,51 +24,65 @@
     <section class="collage-container">
       <div class="collage-header">
         <h1 class="project-title">EyeNova</h1>
-        <p class="project-subtitle">Development of a Novel Slit-Lamp Replication and ResNet Platform for Early Non-Invasive Detection of Glaucoma and Kayser-Fleischer Rings.</p>
+        <p class="project-subtitle">Development of a Novel Slit-Lamp Replication and ResNet Platform for Early Non-Invasive Detection of Glaucoma and Kayser-Fleischer Rings in Neurological Wilson’s Disease and Liver Failure.</p>
       </div>
 
       <div class="collage-grid">
-        <!-- Abstract / Intro -->
+        
+        <!-- Abstract / The Challenge -->
         <div class="collage-item text-item abstract-box">
           <h3>The Challenge</h3>
-          <p>Wilson’s disease is an autosomal recessive disorder caused by mutations in the ATP7B gene, leading to toxic copper accumulation in the liver, brain, and eyes. A key diagnostic feature is the presence of Kayser-Fleischer (KF) rings, which are often difficult to detect in individuals with darker irises due to subtle spectral differences. Traditional slit-lamp examinations require expensive equipment and trained specialists, limiting accessibility in low-resource settings.</p>
+          <p>Wilson’s disease is an autosomal recessive disorder causing toxic copper accumulation. A key diagnostic feature is Kayser-Fleischer (KF) rings, which are often missed in early stages, especially in darker irises. Traditional slit-lamp exams require expensive equipment ($5,000–$10,000) and specialists, limiting global access. EyeNova bridges this gap with an AI-driven, accessible diagnostic tool.</p>
         </div>
 
-        <!-- KF Ring Image -->
+        <!-- KF Ring Placeholder -->
         <div class="collage-item image-item">
-          <img src="https://upload.wikimedia.org/wikipedia/commons/0/00/Kayser-Fleischer_ring.jpg" alt="Kayser-Fleischer Ring" />
-          <div class="image-caption">Kayser-Fleischer Ring</div>
-        </div>
-
-        <!-- Mantis Shrimp Image -->
-        <div class="collage-item image-item tall-image">
-          <img src="https://upload.wikimedia.org/wikipedia/commons/4/4e/Odontodactylus_scyllarus.jpg" alt="Mantis Shrimp" style="object-position: center;"/>
-          <div class="image-caption">Mantis Shrimp Biomimicry</div>
+          <div class="placeholder-img">KF Ring Placeholder<br><small>(Insert your image here)</small></div>
+          <div class="image-caption">Kayser-Fleischer Ring Detection</div>
         </div>
 
         <!-- Biomimicry Explanation -->
         <div class="collage-item text-item highlight-box">
           <h3>Biomimetic Inspiration</h3>
-          <p>The visual system of the mantis shrimp served as the conceptual framework, as it can detect up to 16 distinct photoreceptor channels spanning ultraviolet to infrared wavelengths. Guided by this principle, the standard ResNet-50 architecture was modified to enhance feature extraction across extended spectral representations.</p>
+          <p>Inspired by the mantis shrimp—which detects 16 distinct photoreceptor channels from UV to IR—EyeNova expands perception beyond human trichromatic vision. The pipeline applies intensity scaling, channel-wise transformations, and integrates infrared (IR) imaging to amplify subtle chromatic differences that are typically invisible.</p>
         </div>
 
-        <!-- Slit Lamp Device -->
+        <!-- Mantis Shrimp Placeholder -->
+        <div class="collage-item image-item tall-image">
+          <div class="placeholder-img">Mantis Shrimp Placeholder<br><small>(Insert your image here)</small></div>
+          <div class="image-caption">Mantis Shrimp Visual System</div>
+        </div>
+
+        <!-- Hardware & Engineering -->
+        <div class="collage-item text-item">
+          <h3>Hardware Engineering</h3>
+          <p>Modeled in Fusion 360 and 3D-printed for rapid prototyping, the system operates on a Raspberry Pi with an IR camera. Iteration V2 features an organic, eye-shaped eyecup for optimal focus, expanded housing for status LEDs, and improved airflow. Total hardware cost remains radically accessible at under $50.</p>
+        </div>
+
+        <!-- Slit Lamp / Device Placeholder -->
         <div class="collage-item image-item wide-image">
-          <img src="https://upload.wikimedia.org/wikipedia/commons/5/52/Slit_lamp.jpg" alt="Slit Lamp" style="object-position: top;"/>
-          <div class="image-caption">Traditional Slit-Lamp System</div>
+          <div class="placeholder-img">EyeNova CAD/Device Placeholder<br><small>(Insert your CAD renders here)</small></div>
+          <div class="image-caption">EyeNova V1 & V2 Hardware Design</div>
+        </div>
+        
+        <!-- Machine Learning Architecture -->
+        <div class="collage-item text-item">
+          <h3>Machine Learning Architecture</h3>
+          <p>Two modified ResNet-50 Convolutional Neural Networks were trained using TensorFlow. By augmenting conventional RGB inputs with IR data and multispectral transformations, the deeper convolutional layers can extract high-dimensional features simulating true multispectral perception.</p>
         </div>
 
-        <!-- Glaucoma Image -->
+        <!-- UI / Glaucoma Placeholder -->
         <div class="collage-item image-item">
-          <img src="https://upload.wikimedia.org/wikipedia/commons/9/91/Glaucoma.png" alt="Glaucoma Representation" />
-          <div class="image-caption">Glaucoma Diagnostics</div>
+          <div class="placeholder-img">Streamlit UI / Glaucoma Placeholder<br><small>(Insert your UI screenshot here)</small></div>
+          <div class="image-caption">Real-Time Diagnostic Interface</div>
         </div>
 
         <!-- Results Text -->
         <div class="collage-item text-item results-box">
-          <h3>Results</h3>
-          <p>EyeNova was developed as a portable, low-cost diagnostic platform combining a Raspberry Pi, IR-capable camera, and 3D-printed slit-lamp-inspired optics. The glaucoma model achieved <strong>89.4% accuracy</strong>, while the KF detection model achieved <strong>93.5% accuracy</strong>, significantly outperforming average human diagnostic rates (~65%).</p>
+          <h3>Clinical Results & Impact</h3>
+          <p>Rigorous testing proved the system's clinical viability. The Glaucoma model achieved <strong>89.40% accuracy</strong> (92.6% sensitivity), while the KF Ring model reached an exceptional <strong>93.43% accuracy</strong>, significantly outperforming average human diagnostic rates (60–70%). EyeNova offers a highly scalable, point-of-care solution that democratizes specialized ophthalmic screening.</p>
         </div>
+
       </div>
     </section>
 
