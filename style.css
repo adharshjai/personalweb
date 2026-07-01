@@ -1,6 +1,10 @@
 :root {
-  --primary-color: #222222; /* Dark text */
-  --bg-color: #C1BEB7; /* Deeper warm greige for maximum model contrast */
+  --primary-color: #FAFAFA; /* Light text for dark mode */
+  --bg-color: #0A0A0A; /* Premium deep dark background for massive contrast */
+}
+
+html {
+  scroll-snap-type: y mandatory;
 }
 
 * {
@@ -23,25 +27,37 @@ body {
   left: 0;
   width: 100vw;
   height: 100vh;
-  /* Placed in front of the text as requested ("eyenova in front of it") */
-  z-index: 5;
-  pointer-events: none; /* Allows scrolling and clicking the text beneath if needed */
+  z-index: -1;
+  pointer-events: none; /* Let clicks pass through to whatever is underneath if needed */
+}
+
+.side-text {
+  position: fixed;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 45vw; /* Wider to accommodate the full text on one side */
+  font-family: 'Newsreader', serif;
+  font-size: 2.5vw;
+  font-weight: 400; /* Regular weight looks better for Newsreader paragraph */
+  line-height: 1.6;
+  color: #1A1A1A;
+  z-index: -2;
+  pointer-events: none;
+}
+
+.left-side {
+  left: 5vw;
+  text-align: left; /* Standard paragraph alignment */
+}
+
+.scroll-char {
+  color: #1A1A1A; /* Base color, will be animated by GSAP */
 }
 
 /* Content */
 .content {
   position: relative;
   z-index: 2; /* Text is behind the 3D model */
-}
-
-.hero {
-  height: 100vh;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-  position: relative; /* For absolutely positioning the arrow */
 }
 
 /* Scroll Arrow */
@@ -61,10 +77,10 @@ body {
     transform: translateY(0) translateX(-50%);
   }
   40% {
-    transform: translateY(-10px) translateX(-50%);
+    transform: translateY(-4px) translateX(-50%);
   }
   60% {
-    transform: translateY(-5px) translateX(-50%);
+    transform: translateY(-2px) translateX(-50%);
   }
 }
 
@@ -89,25 +105,42 @@ body {
 
 /* The single scroll track for the 3D GSAP timeline */
 .animation-track {
-  height: 300vh;
+  height: 395vh; /* 395vh per user request */
+  scroll-snap-align: start; /* Snap to the start of the 3D sequence before scrubbing begins */
 }
 
 .main-content {
-  min-height: 100vh;
-  padding: 4rem 2rem;
+  width: 100vw;
+  height: 100vh; /* Strictly one frame */
+  box-sizing: border-box;
+  overflow: hidden; /* Prevent expanding beyond the frame */
+  padding: 3rem 2rem 0; /* Restored some top padding to slightly shrink the image */
   display: flex;
   flex-direction: column;
   align-items: center;
-  background-color: var(--bg-color);
+  background-color: #F4F4F0; /* Explicitly light beige */
+  color: #222222; /* Dark text */
   position: relative;
   z-index: 10; /* Put above the canvas after the dive */
+  scroll-snap-align: start; /* Snap to the top of this section */
 }
 
 .main-content h2 {
-  font-family: 'Newsreader', serif;
-  font-size: 3.5rem;
+  font-family: 'EB Garamond', 'Garamond', serif;
   font-weight: 500;
-  margin-bottom: 1rem;
+  font-style: italic; /* requested */
+  margin-bottom: 1rem; /* Restored margin */
+  line-height: 1; /* keep the two lines tight */
+  text-align: center;
+}
+
+.first-name {
+  font-size: 7rem;
+}
+
+.last-name {
+  font-size: 4.5rem;
+  opacity: 0.8; /* Slight contrast distinction */
 }
 
 .main-content p {
@@ -119,39 +152,345 @@ body {
   margin-bottom: 4rem;
 }
 
-.features {
-  display: flex;
-  gap: 2rem;
-  flex-wrap: wrap;
+.profile-container {
+  display: inline-flex; /* Shrink-wrap horizontally */
   justify-content: center;
+  flex: 1 1 0; /* Take up all remaining space vertically */
+  min-height: 0;
+  position: relative;
 }
 
-.feature-card {
-  background: rgba(0, 0, 0, 0.05); /* Darker transparent bg for light mode */
-  padding: 2rem;
-  border-radius: 12px;
-  width: 300px;
-  text-align: left;
+.profile-img {
+  width: auto; /* Hug the actual image aspect ratio */
+  height: 100%; /* Fill available height */
+  object-fit: contain;
+  object-position: bottom;
+  border-radius: 12px 12px 0 0; /* Flatten the bottom corners since it sits on the edge */
+  position: relative;
+  z-index: 2; /* Ensures it sits in front of the popouts */
+  transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+  pointer-events: none; /* Let clicks pass exactly through the image's transparent parts to the buttons behind it */
 }
 
-.feature-card h3 {
-  font-family: 'Newsreader', serif;
-  font-style: italic;
+.hover-hitbox {
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  z-index: 0; /* Sits behind the buttons */
+  /* This catches the mouse hover so the container still activates! */
+}
+
+.popout-btn {
+  position: absolute;
+  top: 40%; /* Start slightly above center */
+  left: 50%;
+  opacity: 0;
+  color: #FFFFFF;
+  padding: 1rem 1.5rem;
+  border-radius: 50px;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  font-family: 'Inter', sans-serif;
+  font-size: 1.1rem;
+  font-weight: 600;
+  z-index: 1; /* Hidden behind the portrait */
+  transition: all 0.5s cubic-bezier(0.25, 1, 0.5, 1);
+  pointer-events: none; /* Ignore clicks when hidden */
+  text-decoration: none;
+}
+
+.linkedin-popout {
+  background: #0A66C2; /* LinkedIn Blue */
+  box-shadow: 0 15px 35px rgba(10, 102, 194, 0.4);
+  transform: translate(-50%, -50%) scale(0.8);
+}
+
+.instagram-popout {
+  background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
+  box-shadow: 0 15px 35px rgba(220, 39, 67, 0.4);
+  transform: translate(-50%, -50%) scale(0.8);
+}
+
+.profile-container:hover .profile-img {
+  transform: scale(1.02); /* Slight scale up on the image */
+}
+
+.profile-container:hover .popout-btn {
+  pointer-events: auto; /* Allow clicks when visible */
+}
+
+.profile-container:hover .linkedin-popout {
+  /* Pop out further to the top right of the head */
+  transform: translate(60%, -150%) scale(1.1) rotate(5deg);
+  opacity: 1;
+}
+
+.profile-container:hover .instagram-popout {
+  /* Pop out to a nice middle ground */
+  transform: translate(-180%, -150%) scale(1.1) rotate(-9deg);
+  opacity: 1;
+}
+
+/* Removed .blank-page section entirely */
+
+.research-page {
+  height: 100vh;
+  background-color: transparent; /* Transparent so the 3D camera zoom overlaps with the UI sliding in! */
+  position: relative;
+  z-index: 10;
+  scroll-snap-align: start; /* Snap to the research page too */
+  display: flex;
+  align-items: center; /* Vertically center */
+  justify-content: flex-start; /* Horizontally left */
+  padding: 0 4rem; /* Give it some breathing room from the exact left edge */
+}
+.research-container {
+  display: flex;
+  flex-direction: row; /* Put buttons on the right */
+  align-items: center; /* Center them vertically with the text */
+  justify-content: space-between;
+  width: 100%;
+  max-width: 1200px;
+  gap: 4rem;
+}
+
+.section-title {
+  font-family: 'EB Garamond', 'Garamond', serif;
+  font-size: 8rem; /* Big font */
   font-weight: 500;
-  font-size: 1.8rem;
-  margin-bottom: 1rem;
-  color: var(--primary-color);
+  font-style: italic;
+  color: #FAFAFA; /* White text on the dark background */
+  margin: 0 0 0 10vw; /* Pushed to the right */
+  line-height: 1;
 }
 
-.feature-card p {
-  font-size: 1rem;
-  opacity: 0.7;
-  text-align: left;
-  margin-bottom: 0;
+.research-links {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  align-items: flex-end; /* Align the buttons themselves to the right */
+  flex-grow: 1;
+}
+
+.research-btn {
+  /* Heavy Glassmorphism */
+  background: rgba(255, 255, 255, 0.03);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
+  
+  color: #FAFAFA;
+  padding: 1.2rem 3rem;
+  font-family: 'Input Sans', sans-serif;
+  font-size: 1.1rem;
+  font-weight: 500;
+  border-radius: 100px; /* Perfect pill shape */
+  cursor: pointer;
+  transition: all 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+  letter-spacing: 0.1em;
+  
+  /* Layout for text and arrow */
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 3rem;
+  width: 320px; /* Uniform width for all buttons */
+}
+
+.research-btn .arrow {
+  font-size: 1.3rem;
+  transition: transform 0.3s ease;
+}
+
+.research-btn:hover {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.3);
+  box-shadow: 0 15px 40px 0 rgba(0, 0, 0, 0.5);
+  transform: translateY(-4px);
+}
+
+.research-btn:hover .arrow {
+  transform: translate(4px, -4px); /* Arrow shoots up and right on hover */
 }
 
 @media (max-width: 768px) {
   .name {
     font-size: 4rem;
+  }
+}
+
+/* Resume Page & Bento Grid */
+.resume-page {
+  min-height: 100vh;
+  background-color: var(--bg-color); /* Match the deep dark space */
+  position: relative;
+  z-index: 10;
+  scroll-snap-align: start;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 4rem 10vw;
+  color: #FAFAFA;
+}
+
+.bento-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-auto-rows: minmax(150px, auto);
+  gap: 1.5rem;
+  width: 100%;
+  max-width: 1200px;
+}
+
+.resume-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  max-width: 1200px;
+  margin-bottom: 2rem;
+}
+
+.resume-header .section-title {
+  margin: 0; /* Reset the 10vw margin from earlier just for this header */
+}
+
+.view-resume-btn {
+  font-family: 'Inter', sans-serif;
+  font-size: 1rem;
+  font-weight: 500;
+  color: var(--primary-color);
+  text-decoration: none;
+  padding: 0.75rem 1.5rem;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 50px;
+  background: rgba(255, 255, 255, 0.05);
+  transition: all 0.2s ease;
+  backdrop-filter: blur(10px);
+  position: relative;
+  z-index: 20;
+  cursor: pointer;
+}
+
+.view-resume-btn:hover {
+  background: rgba(255, 255, 255, 0.15);
+  border-color: rgba(255, 255, 255, 0.4);
+  transform: translateY(-2px);
+}
+
+/* Glassmorphic Tiles */
+.bento-tile {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 24px;
+  padding: 2.5rem;
+  position: relative;
+  overflow: hidden;
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  transition: transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94), border-color 0.3s ease;
+}
+
+.bento-tile:hover {
+  transform: translateY(-5px);
+  border-color: rgba(255, 255, 255, 0.2);
+}
+
+.bento-large {
+  grid-row: span 3;
+}
+
+/* Dynamic Glow Effect */
+.bento-glow {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(800px circle at var(--mouse-x) var(--mouse-y), rgba(255,255,255,0.06), transparent 40%);
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.bento-tile:hover .bento-glow {
+  opacity: 1;
+}
+
+.bento-content {
+  position: relative;
+  z-index: 2;
+}
+
+.bento-content h3 {
+  font-family: 'EB Garamond', serif;
+  font-size: 2rem;
+  font-style: italic;
+  margin-bottom: 1.5rem;
+  color: var(--primary-color);
+  opacity: 0.9;
+}
+
+.resume-item h4 {
+  font-family: 'Newsreader', serif;
+  font-size: 1.25rem;
+  font-weight: 500;
+  margin-bottom: 0.5rem;
+}
+
+.resume-item .role {
+  font-size: 0.9rem;
+  color: #A0A0A0;
+  margin-bottom: 1rem;
+  display: flex;
+  justify-content: space-between;
+}
+
+.resume-item ul {
+  padding-left: 1.2rem;
+  color: #CCCCCC;
+  font-size: 0.95rem;
+  line-height: 1.6;
+}
+
+.resume-item ul li {
+  margin-bottom: 0.5rem;
+}
+
+.resume-item p {
+  color: #CCCCCC;
+  font-size: 0.95rem;
+  line-height: 1.6;
+  margin-bottom: 0.5rem;
+}
+
+.skills-cluster {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+.skill-tag {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 0.5rem 1rem;
+  border-radius: 50px;
+  font-size: 0.9rem;
+  color: #E0E0E0;
+  transition: background 0.2s ease, transform 0.2s ease;
+}
+
+.skill-tag:hover {
+  background: rgba(255, 255, 255, 0.15);
+  transform: scale(1.05);
+}
+
+@media (max-width: 900px) {
+  .bento-grid {
+    grid-template-columns: 1fr;
+  }
+  .bento-large {
+    grid-row: span 1;
   }
 }

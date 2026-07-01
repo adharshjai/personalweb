@@ -17,7 +17,7 @@ const canvas = document.querySelector('#webgl-canvas');
 const scene = new THREE.Scene();
 
 const sizes = {
-  width: window.innerWidth,
+  width: document.documentElement.clientWidth,
   height: window.innerHeight
 };
 
@@ -50,7 +50,7 @@ const modelGroup = new THREE.Group();
 scene.add(modelGroup);
 
 loader.load(
-  './project_peabody.glb',
+  '/project_peabody.glb',
   (gltf) => {
     eyenovaModel = gltf.scene;
     
@@ -107,7 +107,8 @@ loader.load(
     const textPlane = addScreenText(modelGroup, eyenovaModel);
 
     // 6. Setup Scroll Animation with GSAP
-    setupScrollAnimation(textPlane);
+    const chars = setupBackgroundText();
+    setupScrollAnimation(textPlane, chars);
   },
   undefined,
   (error) => {
@@ -256,17 +257,14 @@ function addScreenText(parent, model) {
 
   function drawText() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
-    ctx.fillStyle = '#ffffff';
-    ctx.font = 'normal 400 240px "Newsreader", serif'; // Larger font since we have 2048px of vertical space
-    ctx.letterSpacing = '50px'; // Mimic the wide tracking from the background
-    ctx.textAlign = 'center';
-    ctx.textBaseline = 'middle';
+    ctx.fillStyle = '#9A9791'; // Darker beige for a subtle watermark effect
+    ctx.font = 'normal 400 80px "Garamond", serif'; // Very small font
+    ctx.letterSpacing = '0px';
+    ctx.textAlign = 'right';
+    ctx.textBaseline = 'bottom';
     
-    ctx.save();
-    ctx.translate(canvas.width / 2, canvas.height / 2);
-    ctx.rotate(-Math.PI / 2);
-    ctx.fillText('EYENOVA', 0, 0);
-    ctx.restore();
+    // Bottom right corner, pushed as far right as possible
+    ctx.fillText('EyeNova', canvas.width - 50, canvas.height - 190);
     
     if (texture) texture.needsUpdate = true;
   }
@@ -310,30 +308,88 @@ function addScreenText(parent, model) {
   return textPlane;
 }
 
-function setupScrollAnimation(textPlane) {
-  // Create a single timeline for perfectly smooth, sequential animations
-  const tl = gsap.timeline({
-    scrollTrigger: {
-      trigger: '#animation-trigger',
-      start: 'top top',
-      end: 'bottom top',
-      scrub: 0.1, // extremely snappy, no lag
+function setupBackgroundText() {
+  const container = document.getElementById('bg-text-left');
+  if (!container) return null;
+  
+  const text = "EyeNova is a portable, low-cost diagnostic platform that uses biomimetic machine learning and infrared imaging to detect subtle ocular markers of Wilson's disease and glaucoma. Inspired by the mantis shrimp's visual system, it significantly outperforms human diagnostic rates, providing a scalable solution for early detection in underserved regions.";
+  
+  container.innerHTML = '';
+  const words = text.split(' ');
+  words.forEach((word, index) => {
+    const wordSpan = document.createElement('span');
+    wordSpan.style.display = 'inline-block';
+    
+    word.split('').forEach(char => {
+      const charSpan = document.createElement('span');
+      charSpan.textContent = char;
+      charSpan.className = 'scroll-char';
+      wordSpan.appendChild(charSpan);
+    });
+    
+    container.appendChild(wordSpan);
+    
+    if (index < words.length - 1) {
+      container.appendChild(document.createTextNode(' '));
     }
   });
+
+  return container.querySelectorAll('.scroll-char');
+}
+
+function setupScrollAnimation(textPlane, chars) {
+
 
   // Fade out the scroll arrow as soon as the user starts scrolling
   gsap.to('#scroll-arrow', {
     opacity: 0,
     ease: 'none',
     scrollTrigger: {
-      trigger: 'body',
+      trigger: '.main-content',
       start: 'top top',
       end: '150px top', // fades out within the first 150px of scroll
       scrub: true,
     }
   });
 
-  // Step 1: Flip 180 degrees (takes 30% of scroll)
+  // Setup initial model position AFTER all procedural wires are built correctly at (0,0,0)
+  modelGroup.position.x = 3.2; // Pushed even further right per user request
+
+  // Create a single timeline for perfectly smooth, sequential animations
+  const tl = gsap.timeline({
+    scrollTrigger: {
+      trigger: '#animation-trigger',
+      start: 'top top', // Start EXACTLY when the 3D track snaps to the top of the viewport
+      end: 'bottom top', // Finishes EXACTLY when the research page hits the top of the viewport
+      scrub: 0.1, // extremely snappy, no lag
+    }
+  });
+
+  // Step 0: Text Illuminates completely while model sits still
+  if (chars && chars.length > 0) {
+    tl.to(chars, {
+      color: '#FAFAFA',
+      stagger: { amount: 3 }, // Text illuminates completely over the first 3 scroll units
+      ease: 'none',
+      duration: 0.1 // Each character lights up instantly
+    }, 0); // Start at absolute time 0 of timeline
+  }
+
+  // Model waits until time 3.5 (after text is fully illuminated) to start moving
+  tl.to(modelGroup.position, {
+    x: 0,
+    ease: 'power1.inOut',
+    duration: 3
+  }, 3.5); // Pan takes from time 3.5 to 6.5
+
+  // Fade out the text exactly as the pan finishes
+  tl.to('.side-text', {
+    opacity: 0,
+    ease: 'power1.inOut',
+    duration: 1
+  }, 5.5); // Start fading out at time 5.5, fully gone by 6.5
+
+  // Step 1: Flip 180 degrees
   tl.to(modelGroup.rotation, {
     y: Math.PI,
     ease: 'none',
@@ -374,7 +430,7 @@ function setupScrollAnimation(textPlane) {
 
 // 5. Handle Resize
 window.addEventListener('resize', () => {
-  sizes.width = window.innerWidth;
+  sizes.width = document.documentElement.clientWidth;
   sizes.height = window.innerHeight;
 
   camera.aspect = sizes.width / sizes.height;
@@ -397,3 +453,15 @@ const tick = () => {
 };
 
 tick();
+
+// Update mouse position for Bento Grid glow effect
+document.getElementById('bento').onmousemove = e => {
+  for(const tile of document.getElementsByClassName("bento-tile")) {
+    const rect = tile.getBoundingClientRect(),
+          x = e.clientX - rect.left,
+          y = e.clientY - rect.top;
+
+    tile.style.setProperty("--mouse-x", `${x}px`);
+    tile.style.setProperty("--mouse-y", `${y}px`);
+  };
+}

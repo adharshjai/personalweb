@@ -4,52 +4,177 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Adharsh | Eyenova</title>
-    <!-- Importing a fallback serif font in case Kepler isn't installed locally -->
+    <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;1,6..72,400;1,6..72,500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=Newsreader:ital,opsz,wght@0,6..72,200..800;1,6..72,200..800&family=EB+Garamond:ital,wght@0,400;0,500;1,400;1,500&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="./style.css" />
   </head>
   <body>
-    <!-- Background Canvas for Three.js (will be placed in front of text via CSS z-index) -->
+    <!-- The Main Website Content (Now the landing page) -->
+    <section class="main-content" id="main-content">
+      <h2><span class="first-name">Adharsh</span><br><span class="last-name">Jaikumar</span></h2>
+      
+      <!-- Profile Image with Popouts -->
+      <div class="profile-container">
+        <!-- Invisible hitbox to catch hovers while letting clicks pass through to buttons -->
+        <div class="hover-hitbox"></div>
+        
+        <a href="https://www.linkedin.com/in/adharsh-jaikumar-a52a29255/" target="_blank" class="popout-btn linkedin-popout">
+          <!-- LinkedIn Logo -->
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/>
+          </svg>
+          <span>Connect</span>
+          <!-- External Link Icon -->
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line>
+          </svg>
+        </a>
+        <a href="https://www.instagram.com/adharsh_jaikumar/" target="_blank" class="popout-btn instagram-popout">
+          <!-- Instagram Logo -->
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+            <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+            <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+          </svg>
+          <span>Follow</span>
+          <!-- External Link Icon -->
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line>
+          </svg>
+        </a>
+        <img src="/profile.png" alt="Adharsh Jaikumar" class="profile-img" id="profile-img" />
+      </div>
+
+      <!-- Scroll Down Indicator moved to landing page -->
+      <div class="scroll-indicator" id="scroll-arrow">
+        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="6 9 12 15 18 9"></polyline>
+        </svg>
+      </div>
+    </section>
+
+    <!-- Background Canvas for Three.js (z-index: -1) -->
     <canvas id="webgl-canvas"></canvas>
+    <!-- Background text that sits BEHIND the 3D model (z-index: -2) -->
+    <div class="side-text left-side" id="bg-text-left"></div>
 
     <!-- Scrollable Content -->
     <main class="content">
-      <section class="hero">
-        <!-- Scroll Down Indicator -->
-        <div class="scroll-indicator" id="scroll-arrow">
-          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-            <polyline points="6 9 12 15 18 9"></polyline>
-          </svg>
-        </div>
-      </section>
-      
       <!-- Single continuous scroll track for all 3D animations -->
       <section id="animation-trigger" class="animation-track"></section>
     </main>
 
-    <!-- The Main Website Content (outside .content so it can stack above the 3D canvas) -->
-    <section class="main-content" id="main-content">
-        <h2>Welcome to the Future of Vision</h2>
-        <p>The EyeNova is a revolutionary wearable designed to enhance human perception...</p>
-        <div class="features">
-          <div class="feature-card">
-            <h3>Advanced AI</h3>
-            <p>Real-time processing powered by the latest machine learning models.</p>
-          </div>
-          <div class="feature-card">
-            <h3>Ultra Low-Latency</h3>
-            <p>See the world as it happens, with zero perceptible delay.</p>
-          </div>
-          <div class="feature-card">
-            <h3>All-Day Battery</h3>
-            <p>Designed to keep up with your longest days.</p>
+    <!-- Research page -->
+    <section class="research-page" id="research-page">
+      <div class="research-container">
+        <h2 class="section-title">Research</h2>
+        <div class="research-links">
+          <button class="research-btn">
+            <span>EyeNova</span> 
+            <svg class="arrow" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
+          </button>
+          <button class="research-btn">
+            <span>ALASCA</span> 
+            <svg class="arrow" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
+          </button>
+          <button class="research-btn">
+            <span>etcetera</span> 
+            <svg class="arrow" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Resume Page (Bento Grid) -->
+    <section class="resume-page" id="resume-page">
+      <div class="resume-header">
+        <h2 class="section-title">Resume</h2>
+        <a href="/resume.pdf" target="_blank" class="view-resume-btn">View Full Resume ↗</a>
+      </div>
+      <div class="bento-grid" id="bento">
+        <!-- Tile 1: Experience (Large Left) -->
+        <div class="bento-tile bento-large">
+          <div class="bento-glow"></div>
+          <div class="bento-content">
+            <h3>Experience</h3>
+            <div class="resume-item">
+              <h4>Amazon–Virginia Tech Initiative for Efficient and Robust Machine Learning</h4>
+              <p class="role">Student Contributor | Alexandria, VA <span>2026 – Present</span></p>
+              <ul>
+                <li>Engineered Python-based data pipelines to process over 50,000 multi-modal sensor data points, reducing data preprocessing latency by 35% for biomedical and robotic applications.</li>
+                <li>Benchmarked early-stage machine learning models using scikit-learn and PyTorch, achieving a baseline classification accuracy of 88% on preliminary evaluation datasets.</li>
+                <li>Streamlined hardware-software integration by authoring automated testing scripts and comprehensive documentation, cutting environment setup time by 40% and ensuring full reproducibility.</li>
+              </ul>
+            </div>
+            
+            <div class="resume-item" style="margin-top: 2rem;">
+              <h4>Louisville Automated and Robotics Research Institute</h4>
+              <p class="role">Student Researcher | Louisville, KY <span>2025 – 2026</span></p>
+              <ul>
+                <li>Conducted robotics cybersecurity research studying acoustic side-channel leakage in collaborative robots.</li>
+                <li>Built signal-processing and machine-learning workflows to analyze motor acoustics and motion-dependent sound signatures from multi-joint robotic systems.</li>
+                <li>Contributed to a paper published at IEEE/RSJ IROS 2026 and earned 2nd Place at the UofL CSE Graduate Research Competition.</li>
+              </ul>
+            </div>
           </div>
         </div>
-      </section>
 
+        <!-- Tile 2: Education (Top Right) -->
+        <div class="bento-tile">
+          <div class="bento-glow"></div>
+          <div class="bento-content">
+            <h3>Education</h3>
+            <div class="resume-item">
+              <h4>Virginia Tech</h4>
+              <p class="role">Bachelor of Computer Engineering <span>Expected May 2029</span></p>
+              <p class="gpa">GPA: 4.0/4.0 | Blacksburg, VA</p>
+            </div>
+          </div>
+        </div>
 
+        <!-- Tile 3: Skills (Middle Right) -->
+        <div class="bento-tile">
+          <div class="bento-glow"></div>
+          <div class="bento-content">
+            <h3>Skills</h3>
+            <div class="skills-cluster">
+              <span class="skill-tag">Python</span>
+              <span class="skill-tag">Java</span>
+              <span class="skill-tag">C++</span>
+              <span class="skill-tag">React</span>
+              <span class="skill-tag">TensorFlow</span>
+              <span class="skill-tag">PyTorch</span>
+              <span class="skill-tag">OpenCV</span>
+              <span class="skill-tag">ROS</span>
+              <span class="skill-tag">Docker</span>
+              <span class="skill-tag">CUDA</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Tile 4: Selected Projects & Awards (Bottom Right) -->
+        <div class="bento-tile">
+          <div class="bento-glow"></div>
+          <div class="bento-content">
+            <h3>Projects & Awards</h3>
+            <div class="resume-item">
+              <p><strong>Trauma Relief Rover:</strong> CUDA-accelerated edge-computing pipeline on Nvidia Jetson Xavier NX for mmWave radar human detection.</p>
+              <p><strong>Awards:</strong> USACO Gold, Kentucky Academy of Science Top Student (2024), AFRL Awards.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <script>
+      // Force scroll to top on reload to prevent skipping the landing page
+      if ('scrollRestoration' in history) {
+        history.scrollRestoration = 'manual';
+      }
+      window.scrollTo(0, 0);
+    </script>
     <script type="module" src="./main.js"></script>
   </body>
 </html>
