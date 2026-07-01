@@ -6,7 +6,8 @@ export default defineConfig({
     rollupOptions: {
       input: {
         main: resolve(__dirname, 'index.html'),
-        eyenova: resolve(__dirname, 'eyenova.html')
+        eyenova: resolve(__dirname, 'eyenova.html'),
+        alasca: resolve(__dirname, 'alasca.html')
       }
     }
   }

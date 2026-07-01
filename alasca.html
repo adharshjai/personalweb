@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ALASCA - Adharsh Jaikumar</title>
+    <link rel="stylesheet" href="./style.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400..800;1,400..800&family=Inter:wght@100..900&family=Newsreader:ital,opsz,wght@0,6..72,200..800;1,6..72,200..800&family=Outfit:wght@100..900&display=swap" rel="stylesheet">
+  </head>
+  <body>
+    <div class="project-header">
+      <a href="/" class="back-btn">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+        <span>Back</span>
+      </a>
+      <a href="/alasca_paper.pdf" target="_blank" class="view-resume-btn view-paper-btn">View Full Paper ↗</a>
+    </div>
+
+    <section class="collage-container">
+      <div class="collage-header">
+        <h1 class="project-title">ALASCA</h1>
+        <p class="project-subtitle">Asset Leakage with Acoustic Side-Channel Attacks in Multi-Joint Collaborative Robots.</p>
+      </div>
+
+      <div class="collage-grid">
+        
+        <!-- Abstract / The Challenge -->
+        <div class="collage-item text-item abstract-box">
+          <h3>The Threat Model</h3>
+          <p>Collaborative robots (cobots) are increasingly deployed in high-value manufacturing environments, where their motion trajectories encode proprietary intellectual property (e.g., aerospace composite layups, pharmaceutical compounding). While prior acoustic attacks targeted stepper motors in 3D printers, ALASCA presents the first acoustic side-channel attack targeting the continuous, broadband noise of brushless DC (BLDC) servo motors and harmonic drives in modern cobots.</p>
+        </div>
+
+        <!-- Robot Placeholder -->
+        <div class="collage-item image-item">
+          <div class="placeholder-img">Franka Emika Panda Placeholder<br><small>(Insert cobot image here)</small></div>
+          <div class="image-caption">Target: 7-DOF Franka Emika Panda</div>
+        </div>
+
+        <!-- Ambisonic Audio -->
+        <div class="collage-item text-item highlight-box">
+          <h3>Spatial Acoustic Analysis</h3>
+          <p>Using a single four-channel Ambisonic microphone (Zoom H3-VR) positioned near the robot, we capture omnidirectional and directional particle velocity (X, Y, Z axes). By analyzing how acoustic energy radiates asymmetrically during rotation, we can extract spatial features that provide a critical 14.4% accuracy boost over traditional single-channel recording.</p>
+        </div>
+
+        <!-- Spectrogram Placeholder -->
+        <div class="collage-item image-item tall-image">
+          <div class="placeholder-img">Spectrogram Placeholder<br><small>(Insert Y-channel spectrograms here)</small></div>
+          <div class="image-caption">Directional Acoustic Radiation</div>
+        </div>
+
+        <!-- Machine Learning -->
+        <div class="collage-item text-item">
+          <h3>Machine Learning Pipeline</h3>
+          <p>We extract a 270-dimensional feature vector per 250ms window, capturing spectral (MFCCs, Chroma), spatial (energy ratios), and temporal (Delta MFCCs) dynamics. These features train Random Forest classifiers that generalize across vastly different motion profiles, learning the underlying physics of motor commutation and mechanical load.</p>
+        </div>
+
+        <!-- Trajectory Placeholder -->
+        <div class="collage-item image-item">
+          <div class="placeholder-img">Trajectory Reconstruction Placeholder<br><small>(Insert trajectory graph here)</small></div>
+          <div class="image-caption">Reconstructed vs Ground Truth Motion</div>
+        </div>
+
+        <!-- Results Text -->
+        <div class="collage-item text-item results-box">
+          <h3>Attack Capabilities & Results</h3>
+          <p>The attack successfully extracts multi-joint motion parameters purely from sound. We achieve <strong>78.4% accuracy</strong> for rotation direction, <strong>94.8% accuracy</strong> for angular velocity (±1 RPM), and <strong>95.9% accuracy</strong> in identifying which joint is moving. Astonishingly, the classifier can also identify the underlying control algorithm (Bang-Bang, PID, or Predictive) with <strong>99.99% accuracy</strong>, enabling end-to-end proprietary trajectory reconstruction (13.1° RMSE).</p>
+        </div>
+
+      </div>
+    </section>
+  </body>
+</html>
