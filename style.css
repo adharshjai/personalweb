@@ -206,6 +206,7 @@ body {
 }
 
 .instagram-popout {
+  display: none !important; /* Hidden for now per user request, keep for reference */
   background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
   box-shadow: 0 15px 35px rgba(220, 39, 67, 0.4);
   transform: translate(-50%, -50%) scale(0.8);
