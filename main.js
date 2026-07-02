@@ -482,13 +482,14 @@ function handleRoute() {
     target.scrollIntoView();
     setTimeout(() => {
       document.documentElement.style.scrollSnapType = '';
-      document.documentElement.style.transition = 'opacity 0.5s ease';
-      document.documentElement.style.opacity = '1';
+      const loader = document.getElementById('spa-loader');
+      if (loader) {
+        loader.style.opacity = '0';
+        setTimeout(() => loader.remove(), 500);
+      }
     }, 100);
   } else {
     window.scrollTo(0, 0);
-    document.documentElement.style.transition = 'opacity 0.5s ease';
-    document.documentElement.style.opacity = '1';
   }
 }
 

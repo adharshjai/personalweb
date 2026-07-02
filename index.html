@@ -10,15 +10,26 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=Newsreader:ital,opsz,wght@0,6..72,200..800;1,6..72,200..800&family=EB+Garamond:ital,wght@0,400;0,500;1,400;1,500&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="./style.css" />
-    <script>
-      // Anti-flash script: hide content if loading a section directly
-      const path = window.location.pathname;
-      if (path === '/research' || path === '/resume' || path === '/projects') {
-        document.documentElement.style.opacity = '0';
+    <style>
+      #spa-loader {
+        position: fixed;
+        top: 0; left: 0; width: 100vw; height: 100vh;
+        background-color: #0A0A0A;
+        z-index: 999999;
+        pointer-events: none;
+        transition: opacity 0.4s ease;
       }
-    </script>
+    </style>
   </head>
   <body>
+    <div id="spa-loader"></div>
+    <script>
+      // Remove overlay instantly if landing page so we don't hide it
+      const path = window.location.pathname;
+      if (path === '/' || path === '/landing') {
+        document.getElementById('spa-loader').style.display = 'none';
+      }
+    </script>
     <!-- The Main Website Content (Now the landing page) -->
     <section class="main-content" id="main-content">
       <h2><span class="first-name">Adharsh</span><br><span class="last-name">Jaikumar</span></h2>
