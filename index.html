@@ -170,12 +170,22 @@
     </section>
 
     <script>
-      // Force scroll to top on reload to prevent skipping the landing page
-      if ('scrollRestoration' in history) {
-        history.scrollRestoration = 'manual';
-      }
       if (!window.location.hash) {
+        if ('scrollRestoration' in history) {
+          history.scrollRestoration = 'manual';
+        }
         window.scrollTo(0, 0);
+      } else {
+        if ('scrollRestoration' in history) {
+          history.scrollRestoration = 'auto';
+        }
+        // Fallback for some browsers to ensure it jumps to the hash
+        window.addEventListener('load', () => {
+          setTimeout(() => {
+            const el = document.querySelector(window.location.hash);
+            if (el) el.scrollIntoView();
+          }, 100);
+        });
       }
     </script>
     <script type="module" src="./main.js"></script>
