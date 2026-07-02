@@ -467,7 +467,7 @@ document.getElementById('bento').onmousemove = e => {
 }
 
 // 7. SPA Routing & Scroll Handling
-window.addEventListener('load', () => {
+function handleRoute() {
   const path = window.location.pathname;
   let target = null;
   
@@ -490,7 +490,10 @@ window.addEventListener('load', () => {
     document.documentElement.style.transition = 'opacity 0.5s ease';
     document.documentElement.style.opacity = '1';
   }
-});
+}
+
+// Run routing logic immediately
+handleRoute();
 
 // Update URL as user scrolls
 const observer = new IntersectionObserver((entries) => {
@@ -504,7 +507,6 @@ const observer = new IntersectionObserver((entries) => {
       if (window.location.pathname !== newPath && window.location.pathname !== '/') {
         history.replaceState(null, null, newPath);
       } else if (window.location.pathname === '/' && newPath !== '/landing') {
-        // Special case: if we are at / and scroll down, we want to update. But if we scroll to landing, we can keep / or change to /landing
         history.replaceState(null, null, newPath);
       }
     }
@@ -514,6 +516,10 @@ const observer = new IntersectionObserver((entries) => {
 const elMain = document.getElementById('main-content');
 const elResearch = document.getElementById('research-page');
 const elResume = document.getElementById('resume-page');
-if (elMain) observer.observe(elMain);
-if (elResearch) observer.observe(elResearch);
-if (elResume) observer.observe(elResume);
+
+// Delay starting the observer slightly so it doesn't fight the initial routing jump
+setTimeout(() => {
+  if (elMain) observer.observe(elMain);
+  if (elResearch) observer.observe(elResearch);
+  if (elResume) observer.observe(elResume);
+}, 500);
