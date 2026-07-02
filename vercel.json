@@ -1,0 +1,7 @@
+{
+  "rewrites": [
+    { "source": "/landing", "destination": "/index.html" },
+    { "source": "/research", "destination": "/index.html" },
+    { "source": "/resume", "destination": "/index.html" }
+  ]
+}

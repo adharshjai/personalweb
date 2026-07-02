@@ -465,3 +465,55 @@ document.getElementById('bento').onmousemove = e => {
     tile.style.setProperty("--mouse-y", `${y}px`);
   };
 }
+
+// 7. SPA Routing & Scroll Handling
+window.addEventListener('load', () => {
+  const path = window.location.pathname;
+  let target = null;
+  
+  if (path === '/research' || path === '/projects' || window.location.hash === '#research-page') {
+    target = document.getElementById('research-page');
+  } else if (path === '/resume' || window.location.hash === '#resume-page') {
+    target = document.getElementById('resume-page');
+  }
+
+  if (target) {
+    document.documentElement.style.scrollSnapType = 'none'; // Temporarily disable snapping
+    target.scrollIntoView();
+    setTimeout(() => {
+      document.documentElement.style.scrollSnapType = '';
+      document.documentElement.style.transition = 'opacity 0.5s ease';
+      document.documentElement.style.opacity = '1';
+    }, 100);
+  } else {
+    window.scrollTo(0, 0);
+    document.documentElement.style.transition = 'opacity 0.5s ease';
+    document.documentElement.style.opacity = '1';
+  }
+});
+
+// Update URL as user scrolls
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      let newPath = '/';
+      if (entry.target.id === 'main-content') newPath = '/landing';
+      if (entry.target.id === 'research-page') newPath = '/research';
+      if (entry.target.id === 'resume-page') newPath = '/resume';
+      
+      if (window.location.pathname !== newPath && window.location.pathname !== '/') {
+        history.replaceState(null, null, newPath);
+      } else if (window.location.pathname === '/' && newPath !== '/landing') {
+        // Special case: if we are at / and scroll down, we want to update. But if we scroll to landing, we can keep / or change to /landing
+        history.replaceState(null, null, newPath);
+      }
+    }
+  });
+}, { threshold: 0.5 });
+
+const elMain = document.getElementById('main-content');
+const elResearch = document.getElementById('research-page');
+const elResume = document.getElementById('resume-page');
+if (elMain) observer.observe(elMain);
+if (elResearch) observer.observe(elResearch);
+if (elResume) observer.observe(elResume);

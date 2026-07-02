@@ -10,6 +10,13 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=Newsreader:ital,opsz,wght@0,6..72,200..800;1,6..72,200..800&family=EB+Garamond:ital,wght@0,400;0,500;1,400;1,500&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="./style.css" />
+    <script>
+      // Anti-flash script: hide content if loading a section directly
+      const path = window.location.pathname;
+      if (path === '/research' || path === '/resume' || path === '/projects') {
+        document.documentElement.style.opacity = '0';
+      }
+    </script>
   </head>
   <body>
     <!-- The Main Website Content (Now the landing page) -->
@@ -170,22 +177,8 @@
     </section>
 
     <script>
-      if (!window.location.hash) {
-        if ('scrollRestoration' in history) {
-          history.scrollRestoration = 'manual';
-        }
-        window.scrollTo(0, 0);
-      } else {
-        if ('scrollRestoration' in history) {
-          history.scrollRestoration = 'auto';
-        }
-        // Fallback for some browsers to ensure it jumps to the hash
-        window.addEventListener('load', () => {
-          setTimeout(() => {
-            const el = document.querySelector(window.location.hash);
-            if (el) el.scrollIntoView();
-          }, 100);
-        });
+      if ('scrollRestoration' in history) {
+        history.scrollRestoration = 'manual';
       }
     </script>
     <script type="module" src="./main.js"></script>
