@@ -312,7 +312,7 @@ function setupBackgroundText() {
   const container = document.getElementById('bg-text-left');
   if (!container) return null;
   
-  const text = "EyeNova is a portable, low-cost diagnostic platform that uses biomimetic machine learning and infrared imaging to detect subtle ocular markers of Wilson's disease and glaucoma. Inspired by the mantis shrimp's visual system, it significantly outperforms human diagnostic rates, providing a scalable solution for early detection in underserved regions.";
+  const text = "EyeNova: A portable, biomimetic AI diagnostic platform for accessible and high-precision early detection of ocular disease.";
   
   container.innerHTML = '';
   const words = text.split(' ');
